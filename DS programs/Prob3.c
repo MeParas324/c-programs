@@ -7,12 +7,12 @@ void read_array(int x[ROW][COLUMN], int r, int c);
 void print_array(int x[ROW][COLUMN], int r, int c);
 
 void addElement(int x[ROW][COLUMN], int r, int c)
-{
+{ 
 	int sum = 0, i, j;
 
 	for (i = 0; i < r; i++)
 	{
-		for (j = 0; i < c; j++)
+		for (j = 0; j < c; j++)
 		{
 			sum = sum + x[i][j];
 		}
@@ -28,7 +28,7 @@ void addDiagonal(int x[ROW][COLUMN], int r, int c)
 
 	for (i = 0; i < r; i++)
 	{
-		for (j = 0; i < c; j++)
+		for (j = 0; j < c; j++)
 		{
 			if(i == j)
 			sum = sum + x[i][j];
@@ -45,7 +45,7 @@ void countOdd(int x[ROW][COLUMN], int r, int c)
 
 	for (i = 0; i < r; i++)
 	{
-		for (j = 0; i < c; j++)
+		for (j = 0; j < c; j++)
 		{
 			if(x[i][j]%2 != 0 || x[i][j] == 1)
             odd++;
@@ -62,7 +62,7 @@ void largestNo(int x[ROW][COLUMN], int r, int c)
 
 	for (i = 1; i < r; i++)
 	{
-		for (j = 1; i < c; j++)
+		for (j = 1; j < c; j++)
 		{
 			if(x[i][j] >= large)
 			large = x[i][j];
@@ -102,7 +102,16 @@ int main()
 				break;
 
 			case 2:
-			    addDiagonal(a, r, c);
+			    if(r != c)
+				{
+					printf("We can find only the sum of diagonal elements of a square matrix\n");
+					printf("So pleszzz input a valid row and coloumns\n");
+					return 0;
+				}
+				else
+				{
+			        addDiagonal(a, r, c);
+				}
 				break;
 			
 			case 3:
