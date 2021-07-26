@@ -17,7 +17,7 @@ int main()
 
 	int s[R][C];
 	
-	printf("The sum of Array A and B:\n");
+	printf("The Multiplication of Array A and B:\n");
 	multiply_array(a, b, s);
 	
 	return 0;
