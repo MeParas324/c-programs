@@ -1,113 +1,152 @@
 #include<stdio.h>
-#include<stdlib.h>
-#define MAX 50
 
-void ascendingSort(int *arr, int size){
-    int i, j, temp;
-    for (i = 0; i < size - 1; i++)
-    {
-        for (j = 0; j < size - 1 - i; j++)
-        {
-            if(arr[j] >= arr[j + 1])
-            {
-                 temp = arr[j];
-                 arr[j] = arr[j + 1];
-                 arr[j + 1]= temp;
-            }
-        }
-    }
+int insert(int *array)
+{
+	int num, i;
+	printf("Enter the number of elements: ");
+	scanf("%d", &num);
+	for (i=0; i<num ; i++)
+	{
+		printf("Enter %d element: ", i+1);
+		fflush(stdin);
+		scanf("%d", &array[i]);
+	}
+	return i;
 }
 
-void descendingSort(int *arr, int size){
-    int i, j, temp;
-    for (i = 0; i < size - 1; i++)
-    {
-        for (j = 0; j < size - 1 - i; j++)
-        {
-            if(arr[j] <= arr[j + 1])
-            {
-                 temp = arr[j];
-                 arr[j] = arr[j + 1];
-                 arr[j + 1]= temp;
-            }
-        }
-    }
+void display(int *array, int length)
+{
+	if (array[0] == NULL)
+	{
+		printf("Empty array.");
+	}
+	else
+	{
+		int i;
+		printf("Elements are: ");
+		for (i=0; i<length;i++)
+		{
+			printf("%d", *(array + i));
+		}
+	}
+}
+
+int input_element(int *array, int last, int element)
+{
+	array[last]= element;
+	last++;
+	return last;
+}
+
+int delete_element(int *array, int last)
+{
+	if (array[0] == 0)
+	{
+		printf("Empty Array.");
+		return;
+	}
+	else
+	{
+	last= last -1;
+	printf("Deleted element is: %d", array[last]);
+	return last;
+	}
+}
+
+void sort_ascending(int *array, int last)
+{
+	int i, j;
+	int temp;
+	for (i=0; i<last; i++)
+	{
+		for (j=i+1; j<last; j++)
+		{
+			if (array[i] > array[j])
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
+		}
+	}
+	printf("\n Array sorted in Ascending Order Successfully.\n");
+}
+
+void sort_descending(int *array, int last)
+{
+	int i, j;
+	int temp;
+	for (i=0; i<last; i++)
+	{
+		for (j=i+1; j<last; j++)
+		{
+			if (array[i] < array[j])
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
+		}
+	}
+	printf("\n Array sorted in Descending Order Successfully.\n");
 }
 
 int main()
 {
-    int arr[MAX] = {0};
-    int ch, item, n, i, j, k, l;
-
-    while (1)
+	int array[10];
+	int choice, element;
+	array[0] = NULL;
+	int last=0;
+	
+	while(1)
     {
-        printf("\n.1.Input elements\n");
-        printf("\n.2.Output elements\n");
-        printf("\n.3.Sorting elements in ascending order\n");
-        printf("\n.4.Sorting elements in decending order\n");
-        printf("\n.1.Quit\n");
-        
-        printf("Enter your choice between 1-5\n");
-        scanf("%d", &ch);
-
-        switch (ch)
+        printf("\n\t     ==========MENU==========");
+		printf("\n\t\t 1. Input Array");
+		printf("\n\t\t 2. Output/Display Elements");
+        printf("\n\t\t 3. Insert an Element");
+        printf("\n\t\t 4. Delete an Element");
+        printf("\n\t\t 5. Sort Array in Ascending Order");
+        printf("\n\t\t 6. Sort Array in Descending Order");
+		printf("\n\t\t 7. Exit");
+		
+		printf("\nEnter Choice Number: ");
+		scanf("%d", &choice);
+		
+		switch(choice)
         {
-        case 1:
-             printf("Enter the no of elements into the array");
-             scanf("%d", &n);
-             for (i = 0; i < n; i++)
-             {
-                 scanf("%d", &arr[i]);
-             }
-             break;
+            case 1:
+                last = insert(&array[0]);
+                break;
+	        	
+            case 2:
+	        	display(array, last);
+                break;
+	        	
+			case 3:
+				printf("\nEnter Element to push: ");
+				scanf("%d", &element);
+				last = input_element(&array[0], last, element);
+				break;
+	        
+	        case 4:
+				last = delete_element(&array[0], last);
+	        	break;
 
-        case 2:
-             for (j = 0; j < MAX; j++)
-             {
-                 printf("%d ", arr[j]);
-             }
-             if(j == MAX){
-                 printf("Array is empty pleszz insert elements by choosing option 1\n");
-                 break;
-             }
-             
-             printf("Printing the elements of the array\n");
-             for (i = 0; i < n; i++)
-             {
-                 printf("%d ", arr[i]);
-             }
-             break;
-        
-        case 3:
-             for (k = 0; k < MAX; k++)
-             {
-                 printf("%d ", arr[k]);
-             }
-             if(k == MAX){
-                 printf("Array is empty pleszz insert elements first\n");
-                 break;
-             }
-             ascendingSort(arr,n);
-             break;
-            
-        case 4:
-             for (l = 0; l < MAX; l++)
-             {
-                 printf("%d ", arr[l]);
-             }
-             if(l == MAX){
-                 printf("Array is empty pleszz insert elements by choosing option 1\n");
-                 break;
-             }
-             descendingSort(arr,n);
-             break;
+            case 5:
+                sort_ascending(&array[0], last);
+                break;
 
-        case 5:
-             default:
-                 printf("Quitting the program\n");
-                 exit(0);
-    
-        }
-    }
-    
+            case 6:
+                sort_descending(&array[0], last);
+                break;
+	        	
+	        case 7:
+	        	return 0;
+
+	        default:
+	    		printf("\nInvalid option.");
+		}
+	}
+
+    return 0;
 }

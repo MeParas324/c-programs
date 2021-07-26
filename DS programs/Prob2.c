@@ -28,7 +28,7 @@ int main()
         printf("Age: ");
         scanf("%d", &emp[i].age);
 
-        printf("Salary: ", i);
+        printf("Salary: ");
         scanf("%lf", &emp[i].salary);
     }
     
