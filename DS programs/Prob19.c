@@ -2,7 +2,8 @@
 
 void print_Array(int array[], int size)
 {
-    for (int i =0; i <size ; i++)
+    int i;
+    for (i =0; i <size ; i++)
     {
         printf("%d ", array[i]);
     }
@@ -18,8 +19,8 @@ int partition(int arr[], int low, int high)
 {
     int temp;
     int pivot = arr[high];
-    int i = low -1;
-    for (int j = low; j<high; j++)
+    int i = low -1, j;
+    for (j = low; j<high; j++)
     {
         if (arr[j]<= pivot)
         {

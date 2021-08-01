@@ -124,13 +124,13 @@ int main()
 
     while (1)
     {
-        printf("\n\t     ==========MENU==========");
-		printf("\n\t\t 1. Add Element");
-		printf("\n\t\t 2. Delete Element");
-		printf("\n\t\t 3. Inorder display");
-		printf("\n\t\t 4. Preorder Display");
-        printf("\n\t\t 5. Postorder Display.");
-        printf("\n\t\t 6. Exit");
+        printf("\n==========MENU==========");
+		printf("\n 1. Add Element");
+		printf("\n 2. Delete Element");
+		printf("\n 3. Inorder Traversal");
+		printf("\n 4. Preorder Traversal");
+        printf("\n 5. Postorder Traversal");
+        printf("\n 6. Quit");
 		
 		printf("\nEnter Choice Number: ");
 		scanf("%d", &choice);
@@ -138,19 +138,19 @@ int main()
         switch (choice)
         {
         case 1:
-            printf("Enter the element to add:");
+            printf("\nEnter the element you want to add:");
             scanf("%d", &element);
             insert(root, element);
             break;
         
         case 2:
-            printf("Enter the element to delete: ");
+            printf("Enter the element you want to delete: ");
             scanf("%d", &element);
             root = delete(root, element);
             break;
         
         case 3:
-            inorder (root);
+            inorder(root);
             break;
         
         case 4:
@@ -166,7 +166,7 @@ int main()
             break;
 
         default:
-            printf("Invalid Input.");
+            printf("\nWrong choice\n");
             break;
         }
     }

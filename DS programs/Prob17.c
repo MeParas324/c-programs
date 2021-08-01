@@ -88,7 +88,7 @@ void print(struct node *local)
     }
 }
 
-void push(struct node **head, struct node *element)
+void push(struct node **head, int element)
 {
     struct node* temp = (struct node*)malloc(sizeof(struct node));
     temp->data = element;

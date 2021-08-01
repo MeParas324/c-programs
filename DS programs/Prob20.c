@@ -26,11 +26,15 @@ void Bsearch(int *arr, int size, int element)
 
 int main()
 {
-    int item;
+    int item, i;
     int arr[] = {1, 2, 3, 4, 5, 6, 7};
     int size = sizeof(arr) / sizeof(int);
-
-    printf("Enter the element you want to search\n");
+    
+    printf("Array is:\n");
+    for(i = 0; i< size; i++){
+        printf("%d ", arr[i]);
+    }
+    printf("\nEnter the element you want to search\n");
     scanf("%d", &item);
 
     Bsearch(arr, size, item);
