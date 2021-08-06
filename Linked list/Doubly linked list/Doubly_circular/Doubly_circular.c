@@ -12,14 +12,20 @@ void insertAtBeg(struct node **head, int element)
 {
     struct node *n = (struct node*)malloc(sizeof(struct node));
     n->data = element;
-    n->pre = NULL;
     if(*head == NULL){
-        n->next = NULL;
+        n->next = n;
+        n->pre = n;
         *head = n;
     }
     else{
+        struct node *ptr = *head;
+        while(ptr->next != *head){
+            ptr = ptr->next;
+        }
         n->next = *head;
         n->next->pre = n;
+        ptr->next = n;
+        n->pre = ptr;
         *head = n;
     }
 }
@@ -27,18 +33,20 @@ void insertAtBeg(struct node **head, int element)
 void insertAtEnd(struct node **head, int element){
     struct node *n = (struct node*)malloc(sizeof(struct node));
     n->data = element;
-    n->next = NULL;
     if(*head == NULL){
-        n->pre = NULL;
+        n->pre = n;
+        n->next = n;
         *head = n;
     }
     else{
         struct node *ptr = *head;
-        while(ptr->next != NULL){
+        while(ptr->next != *head){
             ptr = ptr->next;
         }
         ptr->next = n;
-        n->pre = ptr;
+        ptr->next->pre = ptr;
+        n->next = *head;
+        (*head)->pre = n;
     }
 }
 
@@ -59,7 +67,7 @@ void insertAfterNode(struct node **head, int nod, int val){
             n->next->pre = n;
         }
         else{
-            while(ptr->data != nod && ptr->next != NULL){
+            while(ptr->data != nod && ptr->next != *head){
                 ptr = ptr->next;
             }
             if(ptr->data != nod){
@@ -87,7 +95,7 @@ void insertBeforeNode(struct node **head, int nod, int val){
             insertAtBeg(head, val);
         }
         else{
-            while(ptr->next->data != nod && ptr->next != NULL){
+            while(ptr->next->data != nod && ptr->next != *head){
                 ptr = ptr->next;
             }
             if(ptr->next->data != nod){
@@ -108,18 +116,20 @@ void display(struct node *head){
         printf("Linked list is empty\n");
         return ;
     }
-    while(head != NULL){
-        printf("%d->", head->data);
-        head = head->next;
-    }
+    struct node *ptr = head;
+   do{
+        printf("%d->", ptr->data);
+        ptr = ptr->next;
+    }while(ptr->next != head);
 }
 
 void deleteAtBeg(struct node **head){
+    struct node *temp = (struct node *)malloc(sizeof(struct node));
     if(*head == NULL){
         printf("List is empty!Cannot delete.\n");
         return;
     }
-    if((*head)->next == NULL){
+    if((*head)->next == *head){
         struct node*ptr = *head;
         *head = NULL;
         free(ptr);
@@ -127,7 +137,12 @@ void deleteAtBeg(struct node **head){
     else{
         struct node *ptr = *head;
         *head = (*head)->next;
-        (*head)->pre = NULL;
+        temp = ptr;
+        while(temp->next != ptr){
+            temp = temp->next;
+        }
+        temp->next = *head;
+        (*head)->pre = temp;
         free(ptr);
     }
 }
@@ -139,15 +154,16 @@ void deleteAtEnd(struct node **head){
         printf("List is empty!Cannot delete.\n");
         return;
     }
-    if((*head)->next == NULL){
+    if((*head)->next == *head){
         deleteAtBeg(head);
     }
     else{
-        while(ptr->next != NULL){
+        while(ptr->next != *head){
             ptr = ptr->next;
         }
         temp = ptr->pre;
-        temp->next = NULL;
+        temp->next = ptr->next;
+        temp->next->pre = temp;
         free(ptr);
     }
 }
@@ -159,20 +175,27 @@ void deleteAfterNode(struct node **head, int nod){
         printf("List is empty!Cannot delete.\n");
         return;
     }
+    if(ptr->data == nod && ptr->next != *head){
+        ptr = ptr->next;
+        (*head)->next = (*head)->next->next;
+        (*head)->next->next->pre = (*head);
+        free(ptr);
+    }
     if(ptr->data == nod){
         ptr = ptr->next;
-        (*head)->next = NULL;
+        (*head)->next = *head;
+        (*head)->pre = *head;
         free(ptr);
     }
     else{
-       while(ptr->data != nod && ptr->next != NULL){
+       while(ptr->data != nod && ptr->next != *head){
            ptr = ptr->next;
        }
        if(ptr->data != nod){
            printf("Node is not found\n");
            return;
        }
-       if(ptr->data == nod && ptr->next == NULL){
+       if(ptr->data == nod && ptr->next == *head){
            printf("You want to delete a node after the last node which is not possible\n");
            return;
        }
@@ -200,12 +223,12 @@ void deleteAtBefore(struct node **head, int nod){
     else{
        while(ptr->next->data != nod){
            ptr = ptr->next;
-           if(ptr->next == NULL){
+           if(ptr->next == *head){
                printf("Node is not found\n");
                return;
            }
          }
-       if(ptr->next != NULL)
+       if(ptr->next != *head)
        {
        temp = ptr->pre;
        temp->next = ptr->next;
@@ -221,7 +244,7 @@ void search(struct node *head, int element){
         printf("List is empty!\n");
         return;
     }
-    while(head->data != element && head->next != NULL){
+    while(head->data != element && head->next != head){
         head = head->next;
         location++;
     }
